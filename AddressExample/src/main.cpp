@@ -1,12 +1,13 @@
 // #include "../include/infra.h"
-// #include "../include/blockA.h"
-// #include "../include/blockB.h"
+#include "../include/objA.h"
+#include "../include/objB.h"
 // #include "../include/axi.h"
 // #include "../include/port.h"
 
 #include <iostream>
 //#include <stdio.h>
 #include <string.h>
+#include <memory>
 using namespace std;
 
 int main(){
@@ -16,12 +17,6 @@ int main(){
 	infra.funcA();
 	infra.funcB();
 	infra.funcC();
-
-	CBlockA blockA;
-	blockA.print();
-
-	CBlockB blockB;
-	blockB.print();
 
 	axi::CAXI axi;
 	axi.print();
@@ -93,6 +88,27 @@ int main(){
 	//cout<<"Difference of variable and pointer"<< endl;
 	//int address_a = &a;//not allawed
 
+
+	cout<<"Smart pointer(shared_ptr)"<< endl;
+	shared_ptr<CObjA> p_objA = make_shared<CObjA>();
+	p_objA->print();
+
+	cout<<endl;
+
+	cout<<"Smart pointer(unique_ptr)"<< endl;
+	auto ptrB1 = make_unique<CObjB>();
+	ptrB1->print();
+	cout<<"unique_ptr can not duplicate, but can move"<< endl;
+	auto ptrB2 = move(ptrB1);
+	ptrB2->print();
+	ptrB1->print(); //?ptrB1 still works, suggest even after move, ptrB1 still points to objectB
+	
+	cout<<"Try to reset ptrB2..."<<endl;
+	ptrB2.reset(); //can not reset ptrB1, take no effect
+	cout<<"reset ptrB2 completed"<<endl;
+	ptrB2->print(); //?after reset, still can print
+
+	cout<<endl;
 
     return 0;
 }
