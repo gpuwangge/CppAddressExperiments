@@ -11,70 +11,52 @@ Go to the project dir
 指针的值是变量的地址。指针自己也是一个"变量"（指针变量）。  
 既然指针也是变量，它自己也有大小(64位架构下为64位，比int的32位还大)和地址。可以通过指向指针的指针来获得指针变量的地址。  
 
+以64位系统为例：一个int类型的a变量，占4个byte(32 bits)。地址长16个hex(64 bits)。  
 ```
 Variable
 a = 10
 &a = 000000000069fdec
 sizeof(a) = 4
 typeid(a).name() = i
+```
 
+一个int指针，占8个byte(32 bits)，因为指针的长度只跟架构有关，跟变量类型无关。即使void*指针也是8 bytes。  
+指针指向的地址长度也是64 bits。  
+```
 Pointer
 *p_int = 10
 p_int = 000000000069fdec
 sizeof(p_int) = 8
 typeid(p_int).name() = Pi
+```
 
+指向指针的指针也是64 bits。  
+```
 Pointer points to pointer
 **p_p_int = 10
 p_p_int = 000000000069fde0
 sizeof(p_p_int) = 8
 typeid(p_p_int).name() = PPi
+```
 
+Array of int里元素的地址每个增加4,跟int占4个byte相对应。  
+```
 Array
 array[i] = 1 2 3 4 5
 &array[i] = 000000000069fdc0 000000000069fdc4 000000000069fdc8 000000000069fdcc 000000000069fdd0
 sizeof(array) = 20
 typeid(array).name() = A5_i
+```
 
+Array of char里元素的地址每个增加4,跟int占4个byte相对应。  
+```
 Buffer
 buffer[i] = 127 127 127 127 127 127 127 127
 &buffer[i] = 0000000000f51680 0000000000f51681 0000000000f51682 0000000000f51683 0000000000f51684 0000000000f51685 0000000000f51686 0000000000f51687
 sizeof(buffer) = 8
 typeid(buffer).name() = Pc
-
-Raw Pointer
-PS E:\GitHubRepo\CppAddressExperiments\AddressExample\bin> .\addressProject.exe
-Variable
-a = 10
-&a = 000000000069fdec
-sizeof(a) = 4
-typeid(a).name() = i
-
-Pointer
-*p_int = 10
-p_int = 000000000069fdec
-sizeof(p_int) = 8
-typeid(p_int).name() = Pi
-
-Pointer points to pointer
-**p_p_int = 10
-*p_p_int = 000000000069fdec
-p_p_int = 000000000069fde0
-sizeof(p_p_int) = 8
-typeid(p_p_int).name() = PPi
-
-Array
-array[i] = 1 2 3 4 5
-&array[i] = 000000000069fdc0 000000000069fdc4 000000000069fdc8 000000000069fdcc 000000000069fdd0
-sizeof(array) = 20
-typeid(array).name() = A5_i
-
-Buffer
-buffer[i] = 127 127 127 127 127 127 127 127 
-&buffer[i] = 0000000001081680 0000000001081681 0000000001081682 0000000001081683 0000000001081684 0000000001081685 0000000001081686 0000000001081687
-sizeof(buffer) = 8
-typeid(buffer).name() = Pc
 ```
+
 
 # 进程地址空间，堆和栈关系
 在多任务操作系统中，每个进程运行在属于自己的内存沙盘(Virtual Address Space)中。  
