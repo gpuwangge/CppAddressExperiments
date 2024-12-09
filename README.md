@@ -48,7 +48,7 @@ sizeof(array) = 20
 typeid(array).name() = A5_i
 ```
 
-Array of char里元素的地址每个增加4,跟int占4个byte相对应。  
+Array of char里元素的地址每个增加1,跟char占1个byte相对应。  
 ```
 Buffer
 buffer[i] = 127 127 127 127 127 127 127 127
