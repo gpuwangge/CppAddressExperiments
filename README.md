@@ -129,6 +129,80 @@ class SmartPtr {
 };
 ```
 
+```c++
+class Ptr {
+public:
+  SmartPtr *sp;
+  Ptr() : sp(new SmartPtr()) {}
+  Ptr(const Ptr& other) : sp(other.sp) {
+    sp->count++;
+  }
+  Ptr& operator=(const Ptr& other) {
+    sp = other.sp;
+    sp->count++;
+    return *this;
+  }
+  ~Ptr() {
+  printf("ptr deleted val(%d), count(%d) \n", *sp->val, sp->count);
+    if (--sp->count == 0)
+    delete sp;
+  }
+};
+```
+
+```c++
+void test_delete() {
+Ptr p_test;
+*(p_test.sp->val) = 8;
+}
+
+Ptr test_p3() {
+Ptr p;
+*(p.sp->val) = 16; //p will be destoryed when test() ends
+return p;
+}
+
+
+void func() {
+cout << "新建p1指针，赋值为4" << endl;
+Ptr p1;
+*(p1.sp->val) = 4;
+
+cout << "新建p2指针，令p2 = p1" << endl;
+Ptr p2 = p1;
+
+cout << endl;
+
+cout << "验证p2是否有正确的值，验证p1的count是否增长" << endl;
+printf("p2.sp->val = %d, p1.sp->count %d\n", *(p2.sp->val), p1.sp->count);
+
+cout << endl;
+
+cout << "测试内存释放" << endl;
+test_delete();
+
+cout << endl;
+
+cout << "新建p3指针，赋值为16" << endl;
+Ptr p3 = test_p3();
+printf("p3.sp->val = %d\n", *(p3.sp->val));
+
+getchar();
+
+}
+```
+
+```c++
+int main() {
+  func();
+  
+  getchar();
+  getchar();
+  return 0;
+}
+```
+
+
 
 # Reference
 https://book.crifan.com/books/explore_underlying_mechanism_binary_security/website/windows/security_mechanism/alsr.html  
