@@ -98,6 +98,12 @@ Linux下内核进程和用户进程所占的虚拟内存比例为1:3；Windows�
 一个解决办法是加上throw exception()，在catch里delete。但在一个大型项目里，这样做所增加的复杂度也是一个灾难。  
 因此，我们希望有一种机制，使得堆上使用的内存也能像栈上的变量一样，用完之后就自动释放，完全杜绝内存泄露的风险。  
 设计思路：智能指针将普通的指针封装成类对象指针。在类的析构函数里delete掉内存。当然这个智能指针要用模板，以支持不同的类型。  
+
+## 智能指针的特点
+1 在构造阶段分配内存  
+2 在生命期结束阶段自动销毁内存  
+3 共享功能：多个共享指针可以指向同一个对象，而当最后一个共享指针在作用域范围内结束时，内存才会被自动的释放。  
+
 ## C++11支持的智能指针
 shared_ptr, weak_ptr, unique_ptr是C++11支持的智能指针。(头文件：<memory>)  
 (auto_ptr已经被C++11弃用)
@@ -107,6 +113,21 @@ shared_ptr, weak_ptr, unique_ptr是C++11支持的智能指针。(头文件：<me
 只允许基础指针的一个所有者。 除非你确信需要 shared_ptr，否则请将该指针用作 POCO 的默认选项。 可以移到新所有者，但不会复制或共享。 替换已弃用的 auto_ptr。 与 boost::scoped_ptr 比较。 unique_ptr 很小且高效;大小是一个指针，它支持用于从 c + + 标准库集合快速插入和检索的右值引用。   
 - weak_ptr
 结合 shared_ptr 使用的特例智能指针。 weak_ptr 提供对一个或多个 shared_ptr 实例拥有的对象的访问，但不参与引用计数。 如果你想要观察某个对象但不需要其保持活动状态，请使用该实例。 在某些情况下，需要断开 shared_ptr 实例间的循环引用。   
+
+## 如何自己实现智能指针
+以下是一个智能指针的实现举例  
+```c++
+class SmartPtr {
+  public:
+  int count;
+  int *val;
+  SmartPtr() : count(1), val(new int()) {}
+  ~SmartPtr() {
+    printf("smart_ptr deleted val(%d), count(%d) \n", *val, count);
+    delete val;
+  }
+};
+```
 
 
 # Reference
