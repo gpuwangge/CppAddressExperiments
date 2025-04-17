@@ -137,7 +137,7 @@ public:
   Ptr(const Ptr& other) : sp(other.sp) {
     sp->count++;
   }
-  Ptr& operator=(const Ptr& other) {
+  Ptr& operator=(const Ptr& other) { //重载赋值运算符。当用=赋值的时候，并不会new一个新的内存空间，仅仅是count+1。只有所有的示例被销毁的时候(也就是count==0的时候)才delete释放空间
     sp = other.sp;
     sp->count++;
     return *this;
