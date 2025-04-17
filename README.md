@@ -143,7 +143,7 @@ public:
     return *this;
   }
   ~Ptr() {
-  printf("ptr deleted val(%d), count(%d) \n", *sp->val, sp->count);
+    printf("ptr deleted val(%d), count(%d) \n", *sp->val, sp->count);
     if (--sp->count == 0)
     delete sp;
   }
