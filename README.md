@@ -114,8 +114,8 @@ shared_ptr, weak_ptr, unique_ptr是C++11支持的智能指针。(头文件：<me
 - weak_ptr
 结合 shared_ptr 使用的特例智能指针。 weak_ptr 提供对一个或多个 shared_ptr 实例拥有的对象的访问，但不参与引用计数。 如果你想要观察某个对象但不需要其保持活动状态，请使用该实例。 在某些情况下，需要断开 shared_ptr 实例间的循环引用。   
 
-## 如何自己实现智能指针
-以下是一个智能指针的实现举例  
+## 如何自己实现Shared智能指针
+以下是一个Shared智能指针的实现举例  
 ```c++
 class SmartPtr {
   public:
